@@ -27,6 +27,7 @@ public class MMTClient extends JFrame{
     private Scanner mySocketScanner;
     private PrintWriter mySocketWriter;
     private String name;
+    private int id;
     
     public MMTClient()
     {
@@ -72,6 +73,9 @@ public class MMTClient extends JFrame{
             {
                 try
                 {
+                    String incomingParsable = mySocketScanner.nextLine();
+                    String[] part = incomingParsable.split("\t");
+                    
                     //myTextArea.setText(myTextArea.getText()+mySocketScanner.nextLine()+"\n");
                 }
                 catch(NoSuchElementException nsee)
