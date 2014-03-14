@@ -7,6 +7,9 @@
 package mmtclient;
 
 import java.awt.GridLayout;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
@@ -15,6 +18,11 @@ import javax.swing.JFrame;
  */
 public class MMTClient extends JFrame{
 
+    private Socket mySocket;
+    private final String ServerIP = "172.16.218.183";
+    private Scanner mySocketScanner;
+    private PrintWriter mySocketWriter;
+    
     public MMTClient()
     {
         super ("MMT");
