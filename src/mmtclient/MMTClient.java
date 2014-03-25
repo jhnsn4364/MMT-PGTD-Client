@@ -83,11 +83,26 @@ public class MMTClient extends JFrame{
                     String incomingParsable = mySocketScanner.nextLine();
                     String[] part = incomingParsable.split("\t");
                     
+                    int total = Integer.parseInt(part[0]);
+                    
+                    for (int i = 1; i < total; i++)
+                    {
+                        for (int v = 0; v < 4; v++)
+                        {
+                            int newId = Integer.parseInt(part[i+v]);
+                            int newX = Integer.parseInt(part[i+v]);
+                            
+                        }
+                                              
+                                
+                    }
+                    
                     //myTextArea.setText(myTextArea.getText()+mySocketScanner.nextLine()+"\n");
                 }
                 catch(NoSuchElementException nsee)
                 {
                     //myTextArea.setText(myTextArea.getText()+"Lost connection.");
+                    System.out.println("Connection Lost");
                 }
             }
         }
