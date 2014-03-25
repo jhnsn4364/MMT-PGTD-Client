@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,6 +29,7 @@ public class MMTClient extends JFrame{
     private PrintWriter mySocketWriter;
     private String name;
     private int id;
+    private MMTGamePanel thePanel;
     
     public MMTClient()
     {
@@ -35,7 +37,7 @@ public class MMTClient extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800,800);
         getContentPane().setLayout(new GridLayout(1,1));
-        MMTGamePanel thePanel = new MMTGamePanel();
+        thePanel = new MMTGamePanel();
         getContentPane().add(thePanel);
         this.addKeyListener(thePanel);
         setVisible(true);
@@ -43,6 +45,7 @@ public class MMTClient extends JFrame{
         name = JOptionPane.showInputDialog(this,"What is your name?");
         
         setupNetworking();
+        
     }
     
     public void setupNetworking()
@@ -56,7 +59,8 @@ public class MMTClient extends JFrame{
             Thread readerThread = new Thread(new IncomingReader());
             readerThread.start();
             
-            id = millis();//please change me in the future, I am bad code, only here to keep it from crashing D:
+            Random generator = new Random();
+            id = generator.nextInt(100);//millis() please change me in the future, I am bad code, only here to keep it from crashing D:
             
             mySocketWriter.println("Joining"+"\t");
             mySocketWriter.println(name);
@@ -93,7 +97,8 @@ public class MMTClient extends JFrame{
     {
         System.out.println(ae.getActionCommand());
         //System.out.println("I just sent:\n\t "+userTextField.getText());
-        mySocketWriter.println(this.id+"\t"+thePanel.wStatus()+"\t"+thePanel.aStatus()+"\t"+thePanel.sStatus()+"\t"+thePanel.dStatus());//userTextField.getText());
+        mySocketWriter.println(this.id + "\t" + thePanel.wStatus() + "\t" + thePanel.aStatus() + "\t" + thePanel.sStatus() + "\t" + thePanel.dStatus());
+        //userTextField.getText());
         mySocketWriter.flush();
         //userTextField.setText("");
         //userTextField.requestFocus(); // ask to put the cursor back in the field.
