@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 public class MMTGamePanel extends JPanel implements KeyListener
 {
     private boolean AisDown,SisDown,DisDown,WisDown;
+    private ArrayList<Player> playerList;
     
     public MMTGamePanel()
     {
@@ -100,6 +101,38 @@ public class MMTGamePanel extends JPanel implements KeyListener
         if (WisDown)
             return 1;
         return 0;
+    }
+    
+    public void addPlayer(int id, int x, int y, int isIt)
+    {
+        Player newPlayer = new Player(id, x, y, isIt);
+        playerList.add(newPlayer);
+    }
+    
+    public void updatePlayer(int id, int x, int y, int isIt)
+    {
+        for (int i = 0; i < playerList.size(); i++)
+        {
+            if (id == playerList.get(i).getId)
+            {
+                playerList.get(i).setX(x);
+                playerList.get(i).setY(y);
+                playerList.get(i).setIt(isIt);
+            }
+        }
+    }
+    
+    public void removePlayer(int id)
+    { 
+        
+		ArrayList<Player> playerListCopy = (ArrayList<Player>) playerList.clone();
+        for (int i = 0; i < playerListCopy.size(); i++)
+        {
+            if (id == playerListCopy.get(i).getId)
+            {
+                playerList.remove(playerListCopy.get(i));
+            }
+        }
     }
     
 }
