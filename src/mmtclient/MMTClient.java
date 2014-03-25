@@ -56,6 +56,9 @@ public class MMTClient extends JFrame{
             Thread readerThread = new Thread(new IncomingReader());
             readerThread.start();
             
+            id = millis();//please change me in the future, I am bad code, only here to keep it from crashing D:
+            
+            mySocketWriter.println("Joining"+\t);
             mySocketWriter.println(name);
             mySocketWriter.flush();
         }
@@ -90,7 +93,7 @@ public class MMTClient extends JFrame{
     {
         System.out.println(ae.getActionCommand());
         //System.out.println("I just sent:\n\t "+userTextField.getText());
-        mySocketWriter.println();//userTextField.getText());
+        mySocketWriter.println(this.id+\t+thePanel.wStatus()+\t+thePanel.aStatus()+\t+thePanel.sStatus()+\t+thePanel.dStatus());//userTextField.getText());
         mySocketWriter.flush();
         //userTextField.setText("");
         //userTextField.requestFocus(); // ask to put the cursor back in the field.
