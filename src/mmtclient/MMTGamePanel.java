@@ -37,6 +37,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
     public void keyTyped(KeyEvent e) {
         ;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
     /**
      * detects when a key is first pressed. One of the required methods in the
@@ -74,6 +75,31 @@ public class MMTGamePanel extends JPanel implements KeyListener
             WisDown = false;
         
         
+    }
+    
+    public int aStatus()
+    {
+        if (AisDown)
+            return 1;
+        return 0;
+    }
+    public int sStatus()
+    {
+        if (SisDown)
+            return 1;
+        return 0;
+    }
+    public int dStatus()
+    {
+        if (DisDown)
+            return 1;
+        return 0;
+    }
+    public int wStatus()
+    {
+        if (WisDown)
+            return 1;
+        return 0;
     }
     
 }
