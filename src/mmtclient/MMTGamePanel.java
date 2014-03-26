@@ -20,6 +20,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
 {
     private boolean AisDown,SisDown,DisDown,WisDown;
     private ArrayList<Player> playerList;
+    private int heroId;
     
     
     public MMTGamePanel()
@@ -29,6 +30,11 @@ public class MMTGamePanel extends JPanel implements KeyListener
         SisDown = false;
         DisDown = false;
         WisDown = false;
+    }
+    
+    public void setHeroId(int inId)
+    {
+        heroId = inId;
     }
     
     
@@ -149,12 +155,22 @@ public class MMTGamePanel extends JPanel implements KeyListener
         }
     }
     
+    
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         for (Player p:playerList)
         {
+            if (p.getIsIt==1 && p.getId==heroId)
+                g.setColor(Color.purple);
+            else if (p.getIsIt==1)
+                g.setColor(Color.red);
+            else if (p.getId==heroId)
+                g.setColor(Color.blue);
+            else
+                g.setColor(Color.black);
             g.drawOval(p.getX(), p.getY(), 10, 10);
+            
         }
     }
     
