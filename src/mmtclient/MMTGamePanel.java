@@ -138,6 +138,17 @@ public class MMTGamePanel extends JPanel implements KeyListener
         }
     }
     
+    public boolean containsPlayer(int id)
+    {
+        for (int i = 0; i < playerList.size(); i++)
+        {
+            if (id == playerList.get(i).getId())
+                return true;
+            else
+                return false;
+        }
+    }
+    
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
