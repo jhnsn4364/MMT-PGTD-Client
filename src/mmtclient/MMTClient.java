@@ -30,6 +30,7 @@ public class MMTClient extends JFrame{
     private String name;
     private int id;
     private MMTGamePanel thePanel;
+    private ArrayList<Integer> usedIds = new ArrayList<Integer>;
     //private int localId;
     
     public MMTClient()
@@ -61,7 +62,7 @@ public class MMTClient extends JFrame{
             readerThread.start();
             
             Random generator = new Random();
-            id = generator.nextInt(100);//millis() please change me in the future, I am bad code, only here to keep it from crashing D:
+            //id = generator.nextInt(100);//I am better now, thank you
             
             mySocketWriter.println("Joining"+"\t");
             mySocketWriter.println(name);
@@ -69,6 +70,11 @@ public class MMTClient extends JFrame{
             String incomingParsable = mySocketScanner.nextLine();
             String[] part = incomingParsable.split("\t");
             id = Integer.parseInt(part[0]);
+            usedIds.add(id);
+            int x = Integer.parseInt(part[1]);
+            int y = Integer.parseInt(part[2]);
+            
+            
             
             
         }
@@ -96,6 +102,18 @@ public class MMTClient extends JFrame{
                        
                        int newId = Integer.parseInt(part[i]);
                        int newX = Integer.parseInt(part[i+1]);
+                       int newY = Integer.parseInt(part[i+2]);
+                       int newIt = Integer.parseInt(part[i+3]);
+                       
+                       if (thePanel.containsPlayer(newId))
+                       {
+                           thePanel.updatePlayer(newId,newX,newY,newIt);
+                       }
+                       else if (!(usedIds.contains(newId)))
+                       {
+                           thePanel.addPlayer(newId,newX,newY,newIt);
+                           usedIds.add(newId);
+                       }
                                                
                                 
                     }
