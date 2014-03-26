@@ -30,6 +30,7 @@ public class MMTClient extends JFrame{
     private String name;
     private int id;
     private MMTGamePanel thePanel;
+    //private int localId;
     
     public MMTClient()
     {
@@ -65,6 +66,11 @@ public class MMTClient extends JFrame{
             mySocketWriter.println("Joining"+"\t");
             mySocketWriter.println(name);
             mySocketWriter.flush();
+            String incomingParsable = mySocketScanner.nextLine();
+            String[] part = incomingParsable.split("\t");
+            id = Integer.parseInt(part[0]);
+            
+            
         }
         catch(IOException ioe)
         {
@@ -85,15 +91,12 @@ public class MMTClient extends JFrame{
                     
                     int total = Integer.parseInt(part[0]);
                     
-                    for (int i = 1; i < total; i++)
+                    for (int i = 1; i < total; i+=4)
                     {
-                        for (int v = 0; v < 4; v++)
-                        {
-                            int newId = Integer.parseInt(part[i+v]);
-                            int newX = Integer.parseInt(part[i+v]);
-                            
-                        }
-                                              
+                       
+                       int newId = Integer.parseInt(part[i]);
+                       int newX = Integer.parseInt(part[i+1]);
+                                               
                                 
                     }
                     
