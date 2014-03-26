@@ -6,8 +6,10 @@
 
 package mmtclient;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -18,6 +20,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
 {
     private boolean AisDown,SisDown,DisDown,WisDown;
     private ArrayList<Player> playerList;
+    
     
     public MMTGamePanel()
     {
@@ -113,7 +116,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
     {
         for (int i = 0; i < playerList.size(); i++)
         {
-            if (id == playerList.get(i).getId)
+            if (id == playerList.get(i).getId())
             {
                 playerList.get(i).setX(x);
                 playerList.get(i).setY(y);
@@ -125,13 +128,22 @@ public class MMTGamePanel extends JPanel implements KeyListener
     public void removePlayer(int id)
     { 
         
-		ArrayList<Player> playerListCopy = (ArrayList<Player>) playerList.clone();
+        ArrayList<Player> playerListCopy = (ArrayList<Player>) playerList.clone();
         for (int i = 0; i < playerListCopy.size(); i++)
         {
-            if (id == playerListCopy.get(i).getId)
+            if (id == playerListCopy.get(i).getId())
             {
                 playerList.remove(playerListCopy.get(i));
             }
+        }
+    }
+    
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        for (Player p:playerList)
+        {
+            g.drawOval(p.getX(), p.getY(), 10, 10);
         }
     }
     
