@@ -6,6 +6,7 @@
 
 package mmtclient;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
 public class MMTGamePanel extends JPanel implements KeyListener
 {
     private boolean AisDown,SisDown,DisDown,WisDown;
-    private ArrayList<Player> playerList;
+    private ArrayList<Player> playerList = new ArrayList<Player>();
     private int heroId;
     
     
@@ -116,6 +117,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
     {
         Player newPlayer = new Player(id, x, y, isIt);
         playerList.add(newPlayer);
+        repaint();
     }
     
     public void updatePlayer(int id, int x, int y, int isIt)
@@ -127,6 +129,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
                 playerList.get(i).setX(x);
                 playerList.get(i).setY(y);
                 playerList.get(i).setIt(isIt);
+                repaint();
             }
         }
     }
@@ -140,6 +143,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
             if (id == playerListCopy.get(i).getId())
             {
                 playerList.remove(playerListCopy.get(i));
+                repaint();
             }
         }
     }
@@ -153,25 +157,30 @@ public class MMTGamePanel extends JPanel implements KeyListener
             else
                 return false;
         }
+        return false;
     }
     
     
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        for (Player p:playerList)
+        if (playerList.size()>0)
         {
-            if (p.getIsIt==1 && p.getId==heroId)
-                g.setColor(Color.purple);
-            else if (p.getIsIt==1)
-                g.setColor(Color.red);
-            else if (p.getId==heroId)
-                g.setColor(Color.blue);
-            else
-                g.setColor(Color.black);
-            g.drawOval(p.getX(), p.getY(), 10, 10);
-            
+            for (Player p:playerList)
+            {
+                if (p.getIsIt()==1 && p.getId()==heroId)
+                    g.setColor(Color.magenta);
+                else if (p.getIsIt()==1)
+                    g.setColor(Color.red);
+                else if (p.getId()==heroId)
+                    g.setColor(Color.blue);
+                else
+                    g.setColor(Color.black);
+                g.drawOval(p.getX(), p.getY(), 10, 10);
+
+            }
         }
+
     }
     
 }
