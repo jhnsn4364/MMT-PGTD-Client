@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class MMTClient extends JFrame{
 
     private Socket mySocket;
-    private final String ServerIP = "172.16.218.183";
+    private final String ServerIP = "172.16.220.130";
     private Scanner mySocketScanner;
     private PrintWriter mySocketWriter;
     private String name;
@@ -46,8 +46,8 @@ public class MMTClient extends JFrame{
         setVisible(true);
         
         name = JOptionPane.showInputDialog(this,"What is your name?");
-        testPlayer();
-        //setupNetworking();
+        //testPlayer();
+        setupNetworking();
         
     }
     
@@ -67,7 +67,7 @@ public class MMTClient extends JFrame{
     {
         try
         {
-            mySocket = new Socket(ServerIP, 5000);
+            mySocket = new Socket(ServerIP, 5001);
             mySocketScanner = new Scanner(mySocket.getInputStream());
             mySocketWriter = new PrintWriter(mySocket.getOutputStream());
             
