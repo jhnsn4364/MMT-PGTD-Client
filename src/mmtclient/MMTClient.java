@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
@@ -30,7 +31,7 @@ public class MMTClient extends JFrame{
     private String name;
     private int id;
     private MMTGamePanel thePanel;
-    private ArrayList<Integer> usedIds = new ArrayList<Integer>;
+    private ArrayList<Integer> usedIds = new ArrayList<Integer>();
     //private int localId;
     
     public MMTClient()
@@ -45,9 +46,21 @@ public class MMTClient extends JFrame{
         setVisible(true);
         
         name = JOptionPane.showInputDialog(this,"What is your name?");
+        testPlayer();
+        //setupNetworking();
         
-        setupNetworking();
-        
+    }
+    
+    public void testPlayer()
+    {
+        Random generator = new Random();
+        id = generator.nextInt(12);
+        thePanel.setHeroId(id);
+        int x = generator.nextInt(800);
+        int y = generator.nextInt(800);
+        int isIt = 1;
+        thePanel.addPlayer(id, x, y, isIt);
+        thePanel.repaint();
     }
     
     public void setupNetworking()
@@ -61,8 +74,6 @@ public class MMTClient extends JFrame{
             Thread readerThread = new Thread(new IncomingReader());
             readerThread.start();
             
-            Random generator = new Random();
-            //id = generator.nextInt(100);//I am better now, thank you
             
             mySocketWriter.println("Joining"+"\t");
             mySocketWriter.println(name);
@@ -71,8 +82,12 @@ public class MMTClient extends JFrame{
             String[] part = incomingParsable.split("\t");
             id = Integer.parseInt(part[0]);
             usedIds.add(id);
+            thePanel.setHeroId(id);
             int x = Integer.parseInt(part[1]);
             int y = Integer.parseInt(part[2]);
+            int isIt = Integer.parseInt(part[3]);
+            thePanel.addPlayer(id, x, y, isIt);
+            
             
             
             
