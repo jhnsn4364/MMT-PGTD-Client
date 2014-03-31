@@ -72,7 +72,10 @@ public class MMTClient extends JFrame{
             mySocketScanner = new Scanner(mySocket.getInputStream());
             mySocketWriter = new PrintWriter(mySocket.getOutputStream());
             
-            Thread readerThread = new Thread(new IncomingReader());
+            Thread readerThread = new Thread(new IncomingReader());  //PHILLIP>>>>>> Create and start this thread AFTER you collect your initial information!
+                                                                     // You have two methods trying to read this stream at the same time.
+                                                                     // alternately, put the code block below (getting the initial information) into your readerThread's run()
+                                                                     // method, before you start looping.
             readerThread.start();
             
             mySocketWriter.println(name);
