@@ -93,9 +93,11 @@ public class MMTClient extends JFrame{
             
             
         }
+        
         catch(IOException ioe)
         {
             System.out.println(ioe.getStackTrace());
+            System.out.println("Could not connect to server!");
         }
     }
     
