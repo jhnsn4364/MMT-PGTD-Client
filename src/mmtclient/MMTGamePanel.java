@@ -122,16 +122,27 @@ public class MMTGamePanel extends JPanel implements KeyListener
     
     public void updatePlayer(int id, int x, int y, int isIt)
     {
-        for (int i = 0; i < playerList.size(); i++)
+        System.out.println("I'm updating, please");
+        for (Player p:playerList)
         {
-            if (id == playerList.get(i).getId())
+            if (p.getId() == id)
             {
-                playerList.get(i).setX(x);
-                playerList.get(i).setY(y);
-                playerList.get(i).setIt(isIt);
+                p.setX(x);
+                p.setY(y);
+                p.setIt(isIt);
                 repaint();
             }
         }
+//        for (int i = 0; i < playerList.size(); i++)
+//        {
+//            if (id == playerList.get(i).getId())
+//            {
+//                playerList.get(i).setX(x);
+//                playerList.get(i).setY(y);
+//                playerList.get(i).setIt(isIt);
+//                repaint();
+//            }
+//        }
     }
     
     public void removePlayer(int id)
@@ -150,14 +161,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
     
     public boolean containsPlayer(int id)
     {
-        for (int i = 0; i < playerList.size(); i++)
-        {
-            if (id == playerList.get(i).getId())
-                return true;
-            else
-                return false;
-        }
-        return false;
+        return playerList.contains(id);
     }
     
     
