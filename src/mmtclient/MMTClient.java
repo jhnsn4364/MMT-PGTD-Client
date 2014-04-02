@@ -72,34 +72,36 @@ public class MMTClient extends JFrame{
             mySocketScanner = new Scanner(mySocket.getInputStream());
             mySocketWriter = new PrintWriter(mySocket.getOutputStream());
             
+            
+            
+            mySocketWriter.println(name);
+            mySocketWriter.flush();
+            //if (mySocketScanner.hasNext())
+            //{
+            String incomingParsable = mySocketScanner.nextLine();
+            String[] part = incomingParsable.split("\t");
+            System.out.println(incomingParsable);
+            //int totalPlayers = Integer.parseInt(part[0]);
+            id = Integer.parseInt(part[0]);
+            usedIds.add(id);
+            thePanel.setHeroId(id);
+            int x = Integer.parseInt(part[1]);
+            int y = Integer.parseInt(part[2]);
+            int isIt = Integer.parseInt(part[3]);
+            thePanel.addPlayer(id, x, y, isIt);
+
+            System.out.println(id+" "+x+" "+y+" "+isIt);
+            
             Thread readerThread = new Thread(new IncomingReader());  //PHILLIP>>>>>> Create and start this thread AFTER you collect your initial information!
                                                                      // You have two methods trying to read this stream at the same time.
                                                                      // alternately, put the code block below (getting the initial information) into your readerThread's run()
                                                                      // method, before you start looping.
             readerThread.start();
             
-            mySocketWriter.println(name);
-            mySocketWriter.flush();
-            if (mySocketScanner.hasNext())
-            {
-                String incomingParsable = mySocketScanner.nextLine();
-                String[] part = incomingParsable.split("\t");
-                System.out.println(incomingParsable);
-                int totalPlayers = Integer.parseInt(part[0]);
-                id = Integer.parseInt(part[1]);
-                usedIds.add(id);
-                thePanel.setHeroId(id);
-                int x = Integer.parseInt(part[2]);
-                int y = Integer.parseInt(part[3]);
-                int isIt = Integer.parseInt(part[4]);
-                thePanel.addPlayer(id, x, y, isIt);
-
-                System.out.println(id+" "+x+" "+y+" "+isIt);
             
-            
-            }
-            else 
-                setupNetworking();
+            //}
+            //else 
+            //    setupNetworking();
             
             
             
@@ -125,6 +127,9 @@ public class MMTClient extends JFrame{
                         if (mySocketScanner.hasNext())
                         {
                             String incomingParsable = mySocketScanner.nextLine();
+                            
+                            System.out.println(incomingParsable);  
+                            
                             String[] part = incomingParsable.split("\t");
 
                             int total = Integer.parseInt(part[0]);
@@ -136,12 +141,15 @@ public class MMTClient extends JFrame{
                                int newX = Integer.parseInt(part[i+1]);
                                int newY = Integer.parseInt(part[i+2]);
                                int newIt = Integer.parseInt(part[i+3]);
+                               
+                               System.out.println(newId+"/t"+newX+"/t"+newY+"/t"+newIt);
 
-                               if (thePanel.containsPlayer(newId))
-                               {
+                               //if (thePanel.containsPlayer(newId))
+                               //{
                                    thePanel.updatePlayer(newId,newX,newY,newIt);
-                               }
-                               else if (!(usedIds.contains(newId)))
+                                   System.out.println("Hi there");
+                               //}
+                               if (!(usedIds.contains(newId)))
                                {
                                    thePanel.addPlayer(newId,newX,newY,newIt);
                                    usedIds.add(newId);
@@ -150,6 +158,7 @@ public class MMTClient extends JFrame{
 
                             }
                         }
+                        broadcast();
 
                         //myTextArea.setText(myTextArea.getText()+mySocketScanner.nextLine()+"\n");
                     }
@@ -176,6 +185,15 @@ public class MMTClient extends JFrame{
         mySocketWriter.flush();
         //userTextField.setText("");
         //userTextField.requestFocus(); // ask to put the cursor back in the field.
+    }
+    
+    public void broadcast()
+    {
+        //System.out.println(ae.getActionCommand());
+        //System.out.println("I just sent:\n\t "+userTextField.getText());
+        mySocketWriter.println(this.id + "\t" + thePanel.wStatus() + "\t" + thePanel.aStatus() + "\t" + thePanel.sStatus() + "\t" + thePanel.dStatus());
+        //userTextField.getText());
+        mySocketWriter.flush();
     }
     
     /**
