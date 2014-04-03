@@ -134,7 +134,7 @@ public class MMTClient extends JFrame{
 
                             int total = Integer.parseInt(part[0]);
 
-                            for (int i = 1; i < total; i+=4)
+                            for (int i = 1; i < total*4; i+=4)
                             {
 
                                int newId = Integer.parseInt(part[i]);
