@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -26,7 +27,7 @@ import javax.swing.JOptionPane;
 public class MMTClient extends JFrame{
 
     private Socket mySocket;
-    private final String ServerIP = "172.16.220.130";
+    private final String ServerIP = "192.168.1.70";
     private Scanner mySocketScanner;
     private PrintWriter mySocketWriter;
     private String name;
@@ -109,8 +110,15 @@ public class MMTClient extends JFrame{
         
         catch(IOException ioe)
         {
-            System.out.println(ioe.getStackTrace());
+            //System.out.println(ioe.getStackTrace());
             System.out.println("Could not connect to server!");
+            int retry = JOptionPane.showConfirmDialog(this, "Retry connection?","Looks like I can't connect", JOptionPane.YES_NO_OPTION);
+            if (retry == JOptionPane.OK_OPTION)
+            {
+                setupNetworking();
+            }
+            else
+                System.exit(0);
         }
     }
     
@@ -128,7 +136,7 @@ public class MMTClient extends JFrame{
                         {
                             String incomingParsable = mySocketScanner.nextLine();
                             
-                            System.out.println(incomingParsable);  
+                            //System.out.println(incomingParsable);  
                             
                             String[] part = incomingParsable.split("\t");
 
@@ -142,13 +150,13 @@ public class MMTClient extends JFrame{
                                int newY = Integer.parseInt(part[i+2]);
                                int newIt = Integer.parseInt(part[i+3]);
                                
-                               System.out.println(newId+"/t"+newX+"/t"+newY+"/t"+newIt);
+                               //System.out.println(newId+"/t"+newX+"/t"+newY+"/t"+newIt);
 
-                               //if (thePanel.containsPlayer(newId))
-                               //{
+                               if (thePanel.containsPlayer(newId))
+                               {
                                    thePanel.updatePlayer(newId,newX,newY,newIt);
-                                   System.out.println("Hi there");
-                               //}
+                                  // System.out.println("Hi there");
+                               }
                                if (!(usedIds.contains(newId)))
                                {
                                    thePanel.addPlayer(newId,newX,newY,newIt);
@@ -166,6 +174,7 @@ public class MMTClient extends JFrame{
                     {
                         //myTextArea.setText(myTextArea.getText()+"Lost connection.");
                         System.out.println("Connection Lost");
+                        JOptionPane.showMessageDialog(rootPane, "Connection Lost");
                     }
                 }
                 catch (BufferOverflowException boe)

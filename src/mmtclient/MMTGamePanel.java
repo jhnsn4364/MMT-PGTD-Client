@@ -122,7 +122,7 @@ public class MMTGamePanel extends JPanel implements KeyListener
     
     public void updatePlayer(int id, int x, int y, int isIt)
     {
-        System.out.println("I'm updating, please");
+        //System.out.println("I'm updating, go away");
         for (Player p:playerList)
         {
             if (p.getId() == id)
@@ -161,7 +161,12 @@ public class MMTGamePanel extends JPanel implements KeyListener
     
     public boolean containsPlayer(int id)
     {
-        return playerList.contains(id);
+        for (Player p:playerList)
+        {
+            if (p.getId()==id)
+                return true;
+        }
+        return false;
     }
     
     
