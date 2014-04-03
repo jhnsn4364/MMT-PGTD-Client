@@ -178,14 +178,17 @@ public class MMTGamePanel extends JPanel implements KeyListener
             for (Player p:playerList)
             {
                 if (p.getIsIt()==1 && p.getId()==heroId)
+                {
                     g.setColor(Color.magenta);
+                    g.fillOval(p.getX(), p.getY(), 20, 20);
+                }
                 else if (p.getIsIt()==1)
                     g.setColor(Color.red);
                 else if (p.getId()==heroId)
                     g.setColor(Color.blue);
                 else
                     g.setColor(Color.black);
-                g.drawOval(p.getX(), p.getY(), 10, 10);
+                g.fillOval(p.getX(), p.getY(), 20, 20);
 
             }
         }

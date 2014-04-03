@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 public class MMTClient extends JFrame{
 
     private Socket mySocket;
-    private final String ServerIP = "192.168.1.70";
+    private final String ServerIP = "172.16.220.130";
     private Scanner mySocketScanner;
     private PrintWriter mySocketWriter;
     private String name;
@@ -81,7 +81,7 @@ public class MMTClient extends JFrame{
             //{
             String incomingParsable = mySocketScanner.nextLine();
             String[] part = incomingParsable.split("\t");
-            System.out.println(incomingParsable);
+            //System.out.println(incomingParsable);
             //int totalPlayers = Integer.parseInt(part[0]);
             id = Integer.parseInt(part[0]);
             usedIds.add(id);
@@ -91,7 +91,7 @@ public class MMTClient extends JFrame{
             int isIt = Integer.parseInt(part[3]);
             thePanel.addPlayer(id, x, y, isIt);
 
-            System.out.println(id+" "+x+" "+y+" "+isIt);
+            System.out.println("ID:" + id + " Starting x:" + x + " Starting y:" + y + " isIt:" + isIt);
             
             Thread readerThread = new Thread(new IncomingReader());  //PHILLIP>>>>>> Create and start this thread AFTER you collect your initial information!
                                                                      // You have two methods trying to read this stream at the same time.
