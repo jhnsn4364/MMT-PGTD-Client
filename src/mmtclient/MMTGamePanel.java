@@ -57,13 +57,13 @@ public class MMTGamePanel extends JPanel implements KeyListener
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar()=='a') // notice... lower case, and this method only
-            AisDown = true;      //    works with alphanumeric keys. If you 
-        if (e.getKeyChar()=='s') //    want the arrow keys, you'll need to use 
-            SisDown = true;      //    getKeyCode() instead. (See API.)
-        if (e.getKeyChar()=='d')
+        if (e.getKeyChar()=='a'||e.getKeyChar()=='A')   // notice... lower case, and this method only
+            AisDown = true;                             //    works with alphanumeric keys. If you 
+        if (e.getKeyChar()=='s'||e.getKeyChar()=='S')   //    want the arrow keys, you'll need to use 
+            SisDown = true;                             //    getKeyCode() instead. (See API.)
+        if (e.getKeyChar()=='d'||e.getKeyChar()=='D')
             DisDown = true;
-        if (e.getKeyChar()=='w')
+        if (e.getKeyChar()=='w'||e.getKeyChar()=='W')
             WisDown = true;
        
         
@@ -75,14 +75,15 @@ public class MMTGamePanel extends JPanel implements KeyListener
      * @param e 
      */
     @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyChar()=='a')
+    public void keyReleased(KeyEvent e) 
+    {
+        if (e.getKeyChar()=='a'||e.getKeyChar()=='A')
             AisDown = false;
-        if (e.getKeyChar()=='s')
+        if (e.getKeyChar()=='s'||e.getKeyChar()=='S')
             SisDown = false;
-        if (e.getKeyChar()=='d')
+        if (e.getKeyChar()=='d'||e.getKeyChar()=='D')
             DisDown = false;
-        if (e.getKeyChar()=='w')
+        if (e.getKeyChar()=='w'||e.getKeyChar()=='W')
             WisDown = false;
         
         
@@ -178,14 +179,20 @@ public class MMTGamePanel extends JPanel implements KeyListener
             for (Player p:playerList)
             {
                 if (p.getIsIt()==1 && p.getId()==heroId)
+                {
                     g.setColor(Color.magenta);
+                    g.fillOval(p.getX(), p.getY(), 20, 20);
+                }
                 else if (p.getIsIt()==1)
+                {
                     g.setColor(Color.red);
+                    g.fillOval(p.getX(), p.getY(), 20, 20);
+                }
                 else if (p.getId()==heroId)
                     g.setColor(Color.blue);
                 else
                     g.setColor(Color.black);
-                g.fillOval(p.getX(), p.getY(), 20, 20);
+                g.drawOval(p.getX(), p.getY(), 20, 20);
 
             }
         }
