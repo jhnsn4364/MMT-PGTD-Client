@@ -11,12 +11,10 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.BufferOverflowException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -34,6 +32,7 @@ public class MMTClient extends JFrame{
     private int id;
     private MMTGamePanel thePanel;
     private ArrayList<Integer> usedIds = new ArrayList<Integer>();
+    private ArrayList<Integer> deadIds = new ArrayList<Integer>();
     //private int localId;
     
     public MMTClient()
@@ -130,56 +129,62 @@ public class MMTClient extends JFrame{
             {
                 try
                 {
-                    try
+                    if (mySocketScanner.hasNext())
                     {
-                        if (mySocketScanner.hasNext())
+                        String incomingParsable = mySocketScanner.nextLine();
+
+                        //System.out.println(incomingParsable);  
+
+                        String[] part = incomingParsable.split("\t");
+
+                        int total = Integer.parseInt(part[0]);
+
+                        ArrayList<Integer> theseIds = new ArrayList<Integer>();
+
+                        for (int i = 1; i < total*4; i+=4)
                         {
-                            String incomingParsable = mySocketScanner.nextLine();
-                            
-                            //System.out.println(incomingParsable);  
-                            
-                            String[] part = incomingParsable.split("\t");
 
-                            int total = Integer.parseInt(part[0]);
+                           int newId = Integer.parseInt(part[i]);
+                           int newX = Integer.parseInt(part[i+1]);
+                           int newY = Integer.parseInt(part[i+2]);
+                           int newIt = Integer.parseInt(part[i+3]);
 
-                            for (int i = 1; i < total*4; i+=4)
+                           theseIds.add(newId);
+
+                           //System.out.println(newId+"/t"+newX+"/t"+newY+"/t"+newIt);
+
+                           if (thePanel.containsPlayer(newId))
+                           {
+                               thePanel.updatePlayer(newId,newX,newY,newIt);
+                              // System.out.println("Hi there");
+                           }
+                           if (!(usedIds.contains(newId)))
+                           {
+                               thePanel.addPlayer(newId,newX,newY,newIt);
+                               usedIds.add(newId);
+                           }
+
+
+
+                        }
+                        for (int id : usedIds)
+                        {
+                            if (!deadIds.contains(id)&&!theseIds.contains(id))
                             {
-
-                               int newId = Integer.parseInt(part[i]);
-                               int newX = Integer.parseInt(part[i+1]);
-                               int newY = Integer.parseInt(part[i+2]);
-                               int newIt = Integer.parseInt(part[i+3]);
-                               
-                               //System.out.println(newId+"/t"+newX+"/t"+newY+"/t"+newIt);
-
-                               if (thePanel.containsPlayer(newId))
-                               {
-                                   thePanel.updatePlayer(newId,newX,newY,newIt);
-                                  // System.out.println("Hi there");
-                               }
-                               if (!(usedIds.contains(newId)))
-                               {
-                                   thePanel.addPlayer(newId,newX,newY,newIt);
-                                   usedIds.add(newId);
-                               }
-
-
+                                thePanel.removePlayer(id);
+                                deadIds.add(id);
                             }
                         }
-                        broadcast();
+                    }
+                    broadcast();
 
-                        //myTextArea.setText(myTextArea.getText()+mySocketScanner.nextLine()+"\n");
-                    }
-                    catch(NoSuchElementException nsee)
-                    {
-                        //myTextArea.setText(myTextArea.getText()+"Lost connection.");
-                        System.out.println("Connection Lost");
-                        JOptionPane.showMessageDialog(rootPane, "Connection Lost");
-                    }
+                    //myTextArea.setText(myTextArea.getText()+mySocketScanner.nextLine()+"\n");
                 }
-                catch (BufferOverflowException boe)
+                catch(NoSuchElementException nsee)
                 {
-                    System.out.println("BufferOverflow");
+                    //myTextArea.setText(myTextArea.getText()+"Lost connection.");
+                    System.out.println("Connection Lost");
+                    JOptionPane.showMessageDialog(rootPane, "Connection Lost");
                 }
             }
         }
