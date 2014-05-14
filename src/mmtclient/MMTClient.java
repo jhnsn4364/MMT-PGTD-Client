@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class MMTClient extends JFrame{
 
     private Socket mySocket;
-    private final String ServerIP = "172.16.220.130";
+    private final String ServerIP = "172.16.221.198";
     private Scanner mySocketScanner;
     private PrintWriter mySocketWriter;
     private String name;
@@ -60,7 +60,7 @@ public class MMTClient extends JFrame{
         int x = generator.nextInt(800);
         int y = generator.nextInt(800);
         int isIt = 1;
-        thePanel.addPlayer(id, x, y, isIt);
+        thePanel.addPlayer(id, x, y, isIt/*, name*/);
         thePanel.repaint();
     }
     
@@ -148,6 +148,7 @@ public class MMTClient extends JFrame{
                            int newX = Integer.parseInt(part[i+1]);
                            int newY = Integer.parseInt(part[i+2]);
                            int newIt = Integer.parseInt(part[i+3]);
+//                           int newName = Integer.parseInt(part[i+4]);
 
                            theseIds.add(newId);
 
@@ -155,12 +156,12 @@ public class MMTClient extends JFrame{
 
                            if (thePanel.containsPlayer(newId))
                            {
-                               thePanel.updatePlayer(newId,newX,newY,newIt);
-                              // System.out.println("Hi there");
+                               thePanel.updatePlayer(newId,newX,newY,newIt/*,newName*/);
+                              //System.out.println("Hi there");
                            }
                            if (!(usedIds.contains(newId)))
                            {
-                               thePanel.addPlayer(newId,newX,newY,newIt);
+                               thePanel.addPlayer(newId,newX,newY,newIt/*,newName*/);
                                usedIds.add(newId);
                            }
 
