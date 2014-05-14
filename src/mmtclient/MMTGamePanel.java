@@ -114,14 +114,14 @@ public class MMTGamePanel extends JPanel implements KeyListener
         return 0;
     }
     
-    public void addPlayer(int id, int x, int y, int isIt)
+    public void addPlayer(int id, int x, int y, int isIt /*, String name*/)
     {
-        Player newPlayer = new Player(id, x, y, isIt);
+        Player newPlayer = new Player(id, x, y, isIt/*, name*/);
         playerList.add(newPlayer);
         repaint();
     }
     
-    public void updatePlayer(int id, int x, int y, int isIt)
+    public void updatePlayer(int id, int x, int y, int isIt/*, String name*/)
     {
         //System.out.println("I'm updating, go away");
         for (Player p:playerList)
@@ -174,24 +174,33 @@ public class MMTGamePanel extends JPanel implements KeyListener
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        
         if (playerList.size()>0)
         {
             for (Player p:playerList)
             {
                 if (p.getIsIt()==1 && p.getId()==heroId)
                 {
+                    //if the player is it, he will appear as a filled in magenta circle
                     g.setColor(Color.magenta);
                     g.fillOval(p.getX(), p.getY(), 20, 20);
                 }
+                
                 else if (p.getIsIt()==1)
                 {
+                    //if another player is it, he will appear as a filled in red circle
                     g.setColor(Color.red);
                     g.fillOval(p.getX(), p.getY(), 20, 20);
                 }
+                
                 else if (p.getId()==heroId)
+                    //the player will appear as a hollow blue circle
                     g.setColor(Color.blue);
+                
                 else
+                    //all other players will appear as hollow black circles
                     g.setColor(Color.black);
+                
                 g.drawOval(p.getX(), p.getY(), 20, 20);
 
             }
