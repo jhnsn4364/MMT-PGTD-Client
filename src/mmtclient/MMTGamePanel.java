@@ -180,28 +180,26 @@ public class MMTGamePanel extends JPanel implements KeyListener
             for (Player p:playerList)
             {
                 if (p.getIsIt()==1 && p.getId()==heroId)
-                {
-                    //if the player is it, he will appear as a filled in magenta circle
+                
+                    //if the player is it, he will appear as a magenta circle
                     g.setColor(Color.magenta);
-                    g.fillOval(p.getX(), p.getY(), 20, 20);
-                }
+                
                 
                 else if (p.getIsIt()==1)
-                {
-                    //if another player is it, he will appear as a filled in red circle
+                
+                    //if another player is it, he will appear as a red circle
                     g.setColor(Color.red);
-                    g.fillOval(p.getX(), p.getY(), 20, 20);
-                }
+                
                 
                 else if (p.getId()==heroId)
-                    //the player will appear as a hollow blue circle
+                    //the player will appear as a blue circle
                     g.setColor(Color.blue);
                 
                 else
-                    //all other players will appear as hollow black circles
+                    //all other players will appear as black circles
                     g.setColor(Color.black);
                 
-                g.drawOval(p.getX(), p.getY(), 20, 20);
+                g.fillOval(p.getX(), p.getY(), 20, 20);
 
             }
         }
